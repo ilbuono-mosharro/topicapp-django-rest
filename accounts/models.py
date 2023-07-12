@@ -9,7 +9,7 @@ from django.db import models
 class MyUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email_confirmation = models.BooleanField(default=False)
-    avatar = models.ImageField(upload_to="images/avatars/", validators=[
+    avatar = models.ImageField(upload_to="images/avatars/", blank=True, validators=[
         validate_image_file_extension, FileExtensionValidator(['JPEG', 'JPG', 'PNG']),
     ])
 
