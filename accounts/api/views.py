@@ -14,4 +14,4 @@ class SignUp(CreateAPIView):
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsOwner]
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
