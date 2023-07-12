@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('categories.api.urls', namespace='api_categories')),
     path('api/', include('accounts.api.urls', namespace="api_accounts")),
+    path('api/', include('topics.api.urls', namespace="api_topics")),
 ]
 
 if settings.DEBUG:
