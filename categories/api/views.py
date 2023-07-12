@@ -7,7 +7,7 @@ from categories.models import Category
 
 class CategoryViewSet(viewsets.ModelViewSet):
     """
-    A simple ViewSet for viewing and editing accounts.
+    A simple ViewSet for viewing and editing categories.
     """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
