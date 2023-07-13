@@ -8,6 +8,7 @@ from .permissions import IsOwnerUser
 from .serializers import TopicSerializer
 from ..models import Topic
 
+
 class TopicViewSet(viewsets.ModelViewSet):
     """
     A simple ViewSet for viewing and editing topic.
@@ -38,15 +39,27 @@ class TopicViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(topics, many=True)
         return Response(serializer.data)
 
-    @action(detail=True, methods=['post'])
-    def manage_vote(self, request, pk=None):
-        # topic = self.get_object()
-        pass
+    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated], url_path="user-upvote")
+    def up_vote(self, request, pk=None):
+        topic = self.get_object()
+        if topic.users_upvote.filter(id=request.user.id).exists():
+            topic.users_upvote.remove(request.user)
+        else:
+            topic.users_upvote.add(request.user)
+            if topic.users_downvote.filter(id=request.user.id).exists():
+                topic.users_downvote.remove(request.user)
 
+        serializer = self.get_serializer(topic)
+        return Response(serializer.data)
 
-
-
-
-    # user create a topic, user list ther topics, user delete their topic, user update their topics, done
-    # list all the topics done
-    # user can vote
+    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated], url_path="user-downvote")
+    def downvote(self, request, pk=None):
+        topic = self.get_object()
+        if topic.users_downvote.filter(id=request.user.id).exists():
+            topic.users_downvote.remove(request.user)
+        else:
+            topic.users_downvote.add(request.user)
+            if topic.users_upvote.filter(id=request.user.id).exists():
+                topic.users_upvote.remove(request.user)
+        serializer = self.get_serializer(topic)
+        return Response(serializer.data)
