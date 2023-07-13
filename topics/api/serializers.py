@@ -10,7 +10,7 @@ class TopicSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Topic
-        fields = ['starter', 'subject', 'body', 'category', 'upvote', 'downvote']
+        fields = ['starter', 'subject', 'body', 'category', 'users_upvote', 'users_downvote']
 
     def create(self, validated_data):
         starter = validated_data.pop('starter')
