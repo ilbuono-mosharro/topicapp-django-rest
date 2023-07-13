@@ -1,6 +1,9 @@
 from django.core.exceptions import PermissionDenied
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.response import Response
+
 from .permissions import IsOwnerUser
 from .serializers import TopicSerializer
 from ..models import Topic
@@ -28,6 +31,22 @@ class TopicViewSet(viewsets.ModelViewSet):
             raise PermissionDenied("You do not have permission to perform this action.")
         return super().destroy(request, *args, **kwargs)
 
-    # user create a topic, user list ther topics, user delete their topic, user update their topics,
-    # list all the topics
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated, IsOwnerUser], url_path="users-topics")
+    def user_topics(self, request, *args, **kwargs):
+        user = request.user
+        topics = Topic.objects.filter(starter=user)
+        serializer = self.get_serializer(topics, many=True)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['post'])
+    def manage_vote(self, request, pk=None):
+        # topic = self.get_object()
+        pass
+
+
+
+
+
+    # user create a topic, user list ther topics, user delete their topic, user update their topics, done
+    # list all the topics done
     # user can vote

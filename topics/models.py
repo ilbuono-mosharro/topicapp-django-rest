@@ -11,8 +11,8 @@ class Topic(models.Model):
     subject = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=250)
     body = models.TextField()
-    upvote = models.IntegerField(default=0)
-    downvote = models.IntegerField(default=0)
+    users_upvote = models.ManyToManyField(User, related_name="users_upvote")
+    users_downvote = models.ManyToManyField(User, related_name="users_downvote")
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
