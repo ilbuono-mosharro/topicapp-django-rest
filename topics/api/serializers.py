@@ -1,14 +1,13 @@
 from rest_framework import serializers
-
 from ..models import Topic
-
+from accounts.api.serializers import UserSerializer
 
 class TopicSerializer(serializers.ModelSerializer):
-    starter = serializers.PrimaryKeyRelatedField(read_only=True)
+    starter = UserSerializer(read_only=True)
 
     class Meta:
         model = Topic
-        fields = ['id', 'starter', 'subject', 'body', 'category', 'users_upvote', 'users_downvote', 'upvote_count', 'downvote_count']
+        fields = ['id', 'starter', 'subject', 'body', 'category', 'users_upvote', 'users_downvote', 'upvote_count', 'downvote_count', 'created_data']
 
     def create(self, validated_data):
         starter = validated_data.pop('starter')

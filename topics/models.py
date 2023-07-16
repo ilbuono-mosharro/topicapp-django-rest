@@ -24,3 +24,6 @@ class Topic(models.Model):
 
     def downvote_count(self):
         return self.users_downvote.count()
+
+    def created_data(self):
+        return self.created_at.strftime("%d %b %Y")
