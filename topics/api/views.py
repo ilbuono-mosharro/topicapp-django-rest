@@ -13,7 +13,7 @@ class TopicViewSet(viewsets.ModelViewSet):
     """
     A simple ViewSet for viewing and editing topic.
     """
-    queryset = Topic.objects.all()
+    queryset = Topic.objects.all().order_by('-created_at')
     serializer_class = TopicSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 

@@ -1,7 +1,5 @@
 from rest_framework import serializers
-from rest_framework.fields import UUIDField
 
-from categories.models import Category
 from ..models import Topic
 
 
@@ -10,7 +8,7 @@ class TopicSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Topic
-        fields = ['starter', 'subject', 'body', 'category', 'users_upvote', 'users_downvote']
+        fields = ['id', 'starter', 'subject', 'body', 'category', 'users_upvote', 'users_downvote', 'upvote_count', 'downvote_count']
 
     def create(self, validated_data):
         starter = validated_data.pop('starter')

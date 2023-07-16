@@ -18,3 +18,9 @@ class Topic(models.Model):
 
     def __str__(self):
         return self.subject
+
+    def upvote_count(self):
+        return self.users_upvote.count()
+
+    def downvote_count(self):
+        return self.users_downvote.count()
