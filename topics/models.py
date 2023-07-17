@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.text import slugify
+
 from categories.models import Category
 
 User = get_user_model()
@@ -19,11 +21,18 @@ class Topic(models.Model):
     def __str__(self):
         return self.subject
 
-    def upvote_count(self):
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.subject)
+        super(Topic, self).save(*args, **kwargs)
+
+    def get_upvote_num(self):
         return self.users_upvote.count()
 
-    def downvote_count(self):
+    def get_downvote_count(self):
         return self.users_downvote.count()
 
-    def created_data(self):
+    def get_created_data(self):
         return self.created_at.strftime("%d %b %Y")
+
+    def get_category_name(self):
+        return self.category.name

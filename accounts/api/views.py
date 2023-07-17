@@ -18,6 +18,8 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwner]
+    # lookup_field = "auth_token"
+
 
 class LogoutView(APIView):
     permission_classes = [permissions.IsAuthenticated]
