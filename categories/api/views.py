@@ -1,15 +1,15 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
 
-from .serializers import CategorySerializer
-from .permission import IsAdminOrReadOnly
 from categories.models import Category
+from .permission import IsAdminOrReadOnly
+from .serializers import CategorySerializer
+
 
 class CategoryViewSet(viewsets.ModelViewSet):
     """
     A simple ViewSet for viewing and editing categories.
     """
-    queryset = Category.objects.all()
+    queryset = Category.objects.select_related('user')
     serializer_class = CategorySerializer
     permission_classes = [IsAdminOrReadOnly]
 
