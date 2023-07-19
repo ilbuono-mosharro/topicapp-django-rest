@@ -1,8 +1,8 @@
 username : superuser
 password: 123456789
-superuser: user1
+username: user1
 password: aa123456789
-superuser: user2
+username: user2
 password: aa123456789
-superuser: user3
+username: user3
 password: aa123456789
